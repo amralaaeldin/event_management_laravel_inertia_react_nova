@@ -17,7 +17,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
-        //
+        Nova::auth(function ($request) {
+            return in_array(auth()->user()?->role, ['admin',]); // Only admins can access Nova
+        });
     }
 
     /**
