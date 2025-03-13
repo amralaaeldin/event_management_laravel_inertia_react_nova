@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
     Route::post('/events/{event}/attend', [EventController::class, 'attend'])->name('events.attend');
     Route::post('/events/{event}/unattend', [EventController::class, 'unattend'])->name('events.unattend');
