@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->dateTime('start_date_time'); // Start date and time in UTC
             $table->text('description');
             $table->integer('duration'); // Duration in minutes
