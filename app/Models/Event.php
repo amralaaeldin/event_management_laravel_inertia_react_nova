@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Event extends Model
 {
@@ -29,5 +30,15 @@ class Event extends Model
     public function scopePublished($query)
     {
         return $query->where('status', self::STATUSES['published']);
+    }
+
+    public function attendees(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'event_user_attendance')->withTimestamps();
+    }
+
+    public function wishlistUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'event_user_wishlist')->withTimestamps();
     }
 }

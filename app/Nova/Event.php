@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Markdown;
@@ -80,6 +80,16 @@ class Event extends Resource
             Number::make('Waitlist Capacity', 'waitlist_capacity')
                 ->textAlign('left')
                 ->rules('required', 'integer', 'min:0'),
+
+            BelongsToMany::make('Attendees', 'attendees', User::class)
+                ->hideFromIndex()
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+
+            BelongsToMany::make('Wishlist Users', 'wishlistUsers', User::class)
+                ->hideFromIndex()
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
         ];
     }
 
