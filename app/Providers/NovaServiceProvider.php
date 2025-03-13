@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -15,6 +17,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function boot(): void
     {
+        $this->authorization();
         parent::boot();
     }
 
@@ -52,9 +55,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewNova', function (User $user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return $user->hasRole('admin');
         });
     }
 
@@ -68,6 +69,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new \App\Nova\Dashboards\Main,
         ];
+    }
+
+    protected function authorization()
+    {
+        $this->gate();
+
+        Nova::auth(function ($request) {
+            return Gate::allows('viewNova', [$request->user()]);
+        });
     }
 
     /**
