@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ATTENDING_COLOR, WISHLIST_COLOR, EVENT_COLOR } from "../constants/colors";
 
-export default function EventModal({ event, onClose }) {
+export default function EventModal({ event, onClose, onJoin }) {
   if (!event) return null;
 
   const getBackgroundColor = () => {
@@ -11,10 +11,12 @@ export default function EventModal({ event, onClose }) {
     return EVENT_COLOR;
   };
 
+  const messageText = event.is_attending || event.is_wishlist ? 'Unattend' : 'Attend';
+
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1050]"
         initial={{ opacity: 0 }} // Start invisible
         animate={{ opacity: 1 }} // Fade in
         exit={{ opacity: 0 }} // Fade out
@@ -63,7 +65,13 @@ export default function EventModal({ event, onClose }) {
             </div>
           )}
 
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end gap-3 mt-4">
+            <button
+              onClick={onJoin}
+              className="px-4 py-2 transition bg-red-900 rounded-lg hover:bg-red-700"
+            >
+              {messageText}
+            </button>
             <button
               onClick={onClose}
               className="px-4 py-2 transition bg-gray-900 rounded-lg hover:bg-gray-700"

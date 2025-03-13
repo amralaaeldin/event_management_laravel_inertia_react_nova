@@ -61,6 +61,7 @@ export default function Calendar({ events, filters }) {
       if (event.is_attending || event.is_wishlist) router.post(route("events.unattend", event.id));
       else router.post(route("events.attend", event.id));
     }
+    setHoveredEvent(null);
   };
 
   const handleMouseEnter = (event) => {
@@ -161,7 +162,7 @@ export default function Calendar({ events, filters }) {
         />
       </div>
 
-      <EventModal event={hoveredEvent} onClose={() => setHoveredEvent(null)} />
+      <EventModal event={hoveredEvent} onClose={() => setHoveredEvent(null)} onJoin={() => handleEventClick(hoveredEvent)} />
     </div>
   );
 }
