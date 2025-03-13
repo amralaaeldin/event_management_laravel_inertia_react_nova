@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
+    Route::post('/events/{event}/attend', [EventController::class, 'attend'])->name('events.attend');
+    Route::post('/events/{event}/unattend', [EventController::class, 'unattend'])->name('events.unattend');
 });
 
 require __DIR__ . '/auth.php';
