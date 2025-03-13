@@ -130,7 +130,7 @@ export default function Calendar({ events, filters }) {
           (•) Hover on an Event to view details.
         </p>
         <p className="text-sm text-gray-700">
-          (•) Times are according to your browser timezone. it's currently
+          (•) Times are according to your browser timezone. it's currently{' '}
           <span className="font-bold">
             {timezone} ({formattedOffset}).
           </span>
