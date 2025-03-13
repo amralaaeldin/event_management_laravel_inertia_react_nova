@@ -25,7 +25,7 @@ class EventController extends Controller
                 ->whereYear('start_date_time', date('Y', strtotime($date)));
         } elseif ($view === "week") {
             $startOfWeek = date('Y-m-d', strtotime('last sunday', strtotime($date)));
-            $endOfWeek = date('Y-m-d', strtotime('saturday this week', strtotime($date)));
+            $endOfWeek = date('Y-m-d', strtotime('sunday this week', strtotime($date)));
             $query->whereBetween('start_date_time', [$startOfWeek, $endOfWeek]);
         } else { // Day View
             $query->whereDate('start_date_time', $date);
