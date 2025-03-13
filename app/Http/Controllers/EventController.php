@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewEventJoin;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class EventController extends Controller
@@ -92,6 +94,9 @@ class EventController extends Controller
         }
 
         $event->attendees()->syncWithoutDetaching($user->id);
+
+        $mail = new NewEventJoin($user, $event);
+        Mail::send($mail);
 
         return redirect()->route('calendar.index')
             ->with('success', 'You are now attending the event.');
