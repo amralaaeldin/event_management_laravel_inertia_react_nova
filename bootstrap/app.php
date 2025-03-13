@@ -19,6 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'ensurePublished' => \App\Http\Middleware\ensurePublished::class,
+            'ensureNotAttending' => \App\Http\Middleware\ensureNotAttending::class,
+            'ensureNotPast' => \App\Http\Middleware\ensureNotPast::class,
+            'ensureFullAndWaitlistCapacity' => \App\Http\Middleware\ensureFullAndWaitlistCapacity::class,
+            'ensureNotOverlapping' => \App\Http\Middleware\ensureNotOverlapping::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

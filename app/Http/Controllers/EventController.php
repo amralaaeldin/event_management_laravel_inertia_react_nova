@@ -47,52 +47,7 @@ class EventController extends Controller
 
     public function attend(Event $event)
     {
-        $isPublished = $event->status === 'published';
-        if (!$isPublished) {
-            return redirect()->route('calendar.index')
-                ->with('error', 'Event is not published.');
-        }
-
         $user = Auth::user();
-
-        $isAttending = $event->attendees->contains($user->id);
-        if ($isAttending) {
-            return redirect()->route('calendar.index')
-                ->with('error', 'You are already attending this event.');
-        }
-
-        $isUpcoming = $event->start_date_time->isFuture();
-        if (!$isUpcoming) {
-            return redirect()->route('calendar.index')
-                ->with('error', 'Event is in the past.');
-        }
-
-        $isFull = $event->attendees->count() >= $event->capacity;
-        $isInWaitlist = $event->wishlistUsers->contains($user->id);
-        if ($isFull && !$isInWaitlist) {
-            $isWaitlistFull = $event->wishlistUsers->count() >= $event->waitlist_capacity;
-            if ($isWaitlistFull) {
-                return redirect()->route('calendar.index')
-                    ->with('error', 'Both Event & Waitlist are full.');
-            }
-
-            $event->wishlistUsers()->syncWithoutDetaching($user->id);
-            return redirect()->route('calendar.index')
-                ->with('success', 'Event is full and You have been added to the waitlist.');
-        }
-
-        // ensure no overlap between the event and the user attendance events
-        $isOverlap = $user->attendedEvents()
-            ->where('start_date_time', '>', now())
-            ->whereRaw(
-                "TIMESTAMPADD(MINUTE, duration, start_date_time) > ? AND start_date_time < TIMESTAMPADD(MINUTE, ?, ?)",
-                [$event->start_date_time, $event->duration, $event->start_date_time]
-            )->exists();
-        if ($isOverlap) {
-            return redirect()->route('calendar.index')
-                ->with('error', 'You are already attending an Event in this time.');
-        }
-
         $event->attendees()->syncWithoutDetaching($user->id);
 
         $mail = new NewEventJoin($user, $event);
