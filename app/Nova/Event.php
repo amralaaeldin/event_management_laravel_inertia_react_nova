@@ -48,7 +48,7 @@ class Event extends Resource
 
             Text::make('Name')
                 ->textAlign('left')
-                ->rules('required',  'max:255', 'unique:events,name,{{resourceId}}'),
+                ->rules('required',  'max:255'),
 
             DateTime::make('Start Date & Time', 'start_date_time')
                 ->textAlign('left')
