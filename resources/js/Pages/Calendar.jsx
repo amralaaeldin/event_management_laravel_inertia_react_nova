@@ -67,7 +67,7 @@ export default function Calendar({ events, filters }) {
   const handleMouseEnter = (event) => {
     hoverTimeout.current = setTimeout(() => {
       setHoveredEvent(event);
-    }, 850);
+    }, 500);
   };
 
   const handleMouseLeave = () => {
@@ -127,7 +127,7 @@ export default function Calendar({ events, filters }) {
           (•) Click on an event to toggle your attendance status.
         </p>
         <p className="text-sm text-gray-700">
-          (•) Hover on an Event to view details.
+          (•) Hover on an Event `title` to view details.
         </p>
         <p className="text-sm text-gray-700">
           (•) Times are according to your browser timezone. it's currently{' '}
