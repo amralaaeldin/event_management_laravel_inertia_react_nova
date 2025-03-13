@@ -66,7 +66,7 @@ export default function Calendar({ events, filters }) {
   const handleMouseEnter = (event) => {
     hoverTimeout.current = setTimeout(() => {
       setHoveredEvent(event);
-    }, 500);
+    }, 850);
   };
 
   const handleMouseLeave = () => {
