@@ -59,8 +59,8 @@ class EventController extends Controller
                 ->with('error', 'You are already attending this event.');
         }
 
-        $isIncoming = $event->start_date_time->isFuture();
-        if (!$isIncoming) {
+        $isUpcoming = $event->start_date_time->isFuture();
+        if (!$isUpcoming) {
             return redirect()->route('calendar.index')
                 ->with('error', 'Event is in the past.');
         }
