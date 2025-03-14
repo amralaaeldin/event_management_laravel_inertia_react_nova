@@ -52,7 +52,7 @@ Open the `.env` file and configure your environment variables, including databas
 ```bash
 php artisan key:generate
 php artisan migrate
-php artisan db:seed --class=RoleSeeder
+php artisan db:seed
 ```
 
 #### Step 4: Start the Development Server
@@ -78,8 +78,12 @@ npm run dev
 
 ```bash
 You can access the application at http://localhost:8000
-and the admin panel at http://localhost:8000/nova/login
-Credentials:
+User Credentials:
+Email: user@example.com
+Password: 12345678
+
+And the admin panel at http://localhost:8000/nova/login
+Admin Credentials:
 Email: admin@example.com
 Password: 12345678
 ```

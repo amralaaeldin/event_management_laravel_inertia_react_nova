@@ -22,8 +22,7 @@ class RoleSeeder extends Seeder
         }
 
         // Assign the first user as an admin
-        $admin = User::first();
-
+        $admin = User::role('admin')->first();
         if (!$admin) {
             $admin = User::create(
                 [
@@ -33,7 +32,18 @@ class RoleSeeder extends Seeder
                 ]
             );
         }
-
         $admin->assignRole('admin');
+
+        $user = User::role('user')->first();
+        if (!$user) {
+            $user = User::create(
+                [
+                    'name' => 'User',
+                    'email' => 'user@example.com',
+                    'password' => bcrypt('12345678'),
+                ]
+            );
+        }
+        $user->assignRole('user');
     }
 }
