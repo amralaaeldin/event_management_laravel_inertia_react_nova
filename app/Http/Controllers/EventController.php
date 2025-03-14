@@ -53,7 +53,7 @@ class EventController extends Controller
         $mail = new NewEventJoin($user, $event);
         Mail::send($mail);
 
-        return redirect()->route('calendar.index')
+        return redirect()->route('calendar.index', $this->getPreviousQueryParams())
             ->with('success', 'You are now attending the event.');
     }
 
@@ -62,7 +62,22 @@ class EventController extends Controller
         $event->attendees()->detach(Auth::id());
         $event->wishlistUsers()->detach(Auth::id());
 
-        return redirect()->route('calendar.index')
+        return redirect()->route('calendar.index', $this->getPreviousQueryParams())
             ->with('success', 'You are no longer attending the event.');
+    }
+
+    private function getPreviousQueryParams()
+    {
+        $previousUrl = url()->previous();
+        $queryParams = [];
+
+        if ($previousUrl) {
+            $parsedUrl = parse_url($previousUrl);
+            if (isset($parsedUrl['query'])) {
+                parse_str($parsedUrl['query'], $queryParams);
+            }
+        }
+
+        return $queryParams;
     }
 }
